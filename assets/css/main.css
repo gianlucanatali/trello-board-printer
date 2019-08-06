@@ -1,29 +1,52 @@
 body{
-    margin:15%;
+    margin:20px;
+}
+
+p.title{
+    text-align:center;
+    font-size: 4rem;
 }
 
 .panel-body{
     font-size: 1.2em;
 }
 
-h1{ 
+h1.tocHeader{ 
     text-align:center; 
     page-break-before: always; 
     text-decoration: underline; 
     text-decoration: bold; 
     margin-bottom: 2em;
 } 
-h2{ 
+h2.tocHeader{ 
     text-align:left; 
     text-decoration: bold; 
     margin-top: 1em; 
     margin-bottom:5px;
 } 
-h3{ 
+h3.tocHeader{ 
     text-align:left; 
     font-style: italic; 
     margin-top: 1em; 
     margin-bottom:1em;
+}
+
+#loadJsonBtn {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    font-size: 16px;
+    cursor:pointer;
+    width: 250px;
+}
+
+#jsonTrelloBoard {
+    width: 500px;
+    height: 100px;
 }
 
 
@@ -41,13 +64,13 @@ h3{
     counter-increment: h3counter;
 }
 
-h1:before {
+h1.tocHeader:before {
     content: counter(h1counter) ".\0000a0\0000a0";
 }
-h2:before {
+h2.tocHeader:before {
     content: counter(h1counter) "." counter(h2counter) ".\0000a0\0000a0";
 }
-h3:before {
+h3.tocHeader:before {
     content: counter(h1counter) "." counter(h2counter) "." counter(h3counter) ".\0000a0\0000a0";
 }
 

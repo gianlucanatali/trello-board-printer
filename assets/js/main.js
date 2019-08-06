@@ -1,19 +1,66 @@
 
-jQuery.getJSON("assets/json/exported.json", function(data) {
-    autorun(data);
+var store;
+var configObj;
+var storeName="TrelloPrinter";
+
+$(function() {
+    
+    $("#loadJsonBtn").click(function(){   
+        configObj.trelloBoardJson=JSON.parse($("#jsonTrelloBoard").val());
+        showData(configObj.trelloBoardJson);
+        persistConfigObj(configObj.trelloBoardJson);
+    }); 
+    loadConfigObj();
+    if(!configObj.trelloBoardJson){
+        jQuery.getJSON("assets/json/exported.json", function(data) {
+            configObj.trelloBoardJson=data;
+            var textAreaVal ;
+            
+            if(configObj.trelloBoardJson){
+                textAreaVal=JSON.stringify(configObj.trelloBoardJson);
+                showData(configObj.trelloBoardJson);
+            }else{
+                textAreaVal="PASTE HERE YOUR TRELLO BOARD JSON EXPORT!";
+            }
+            $("#jsonTrelloBoard").val(textAreaVal);
+        }).fail(function() {
+                console.log( "error" );
+            });
+    }else{
+        showData(configObj.trelloBoardJson);
+    }
+
+   
+    
 });
 
-function autorun(data) {
-    if (null == data) {
-        return alert('Please insert JSON data from Trello in the code')
-    }
-    showData(eatData(data));
-}
 
-function showData(data) {
+
+function showData(json) {
+    data=eatData(json);
     var template = $('#template-output').html()
     console.log(JSON.stringify(data, null, 2))
     $('#out').html(Mustache.render(template, data))
+    jQuery.tableOfContents("#tocList","h1.tocHeader, h2.tocHeader"); 
+}
+
+function loadConfigObj(){
+    store = new Persist.Store(storeName);
+    configObjStored = store.get('configObj');
+    var objVersion = 2;
+    var restoreObj=configObjStored&&configObjStored.version===objVersion;
+    if(restoreObj){
+        configObj = JSON.parse(configObjStored);
+    }else{
+        configObj = {
+            version: objVersion
+        };
+    }
+}
+
+function persistConfigObj(){
+    var myJSON = JSON.stringify(configObj);
+    store.set('configObj', myJSON);
 }
 
 function eatData(trelloJson) {
@@ -22,6 +69,7 @@ function eatData(trelloJson) {
         lists: [],
         ref: {}
     }
+    window.document.title = trelloJson.name;
     $.each(trelloJson.labels, function( index, value ) {
         data.ref[value.id] = {
             name: value.name,

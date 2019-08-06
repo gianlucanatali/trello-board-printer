@@ -1,4 +1,5 @@
-Used this gist as starting point: https://gist.github.com/mathiasrw/8710615
+#Trello Board Pretty Printer
+You can use this at this link: https://gianlucanatali.github.io/trello-board-printer/
 
 ## Running the samples locally
 
@@ -9,4 +10,7 @@ https://gist.github.com/jgravois/5e73b56fa7756fd00b89#http-server-for-node
 
 Just cd into this folder in your local system, and use
 
-http-server ./trello/ -p 1337
+http-server ./trello-board-printer/ -p 1337
+
+##Credits
+I have used this gist as starting point: https://gist.github.com/mathiasrw/8710615
