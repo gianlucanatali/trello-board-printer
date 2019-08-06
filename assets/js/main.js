@@ -20,7 +20,7 @@ $(function() {
                 textAreaVal=JSON.stringify(configObj.trelloBoardJson);
                 showData(configObj.trelloBoardJson);
             }else{
-                textAreaVal="PASTE HERE YOUR TRELLO BOARD JSON EXPORT!";
+                textAreaVal="";
             }
             $("#jsonTrelloBoard").val(textAreaVal);
         }).fail(function() {
