@@ -1,0 +1,201 @@
+body{
+    margin:15%;
+}
+
+.panel-body{
+    font-size: 1.2em;
+}
+
+h1{ 
+    text-align:center; 
+    page-break-before: always; 
+    text-decoration: underline; 
+    text-decoration: bold; 
+    margin-bottom: 2em;
+} 
+h2{ 
+    text-align:left; 
+    text-decoration: bold; 
+    margin-top: 1em; 
+    margin-bottom:5px;
+} 
+h3{ 
+    text-align:left; 
+    font-style: italic; 
+    margin-top: 1em; 
+    margin-bottom:1em;
+}
+
+
+/*Counter setup start*/
+
+.resetH1 {
+    counter-increment: h1counter;
+    counter-reset: h2counter 0 h3counter 0;
+}
+.resetH2 {
+    counter-reset: h3counter 0;
+    counter-increment: h2counter;
+}
+.resetH3 {
+    counter-increment: h3counter;
+}
+
+h1:before {
+    content: counter(h1counter) ".\0000a0\0000a0";
+}
+h2:before {
+    content: counter(h1counter) "." counter(h2counter) ".\0000a0\0000a0";
+}
+h3:before {
+    content: counter(h1counter) "." counter(h2counter) "." counter(h3counter) ".\0000a0\0000a0";
+}
+
+
+li.checklistItem_complete:before {
+    content: "\2705";
+    margin-left: -20px;
+    margin-right: 10px;
+}
+
+li.checklistItem_incomplete:before {
+    content: "\2610";
+    margin-left: -20px;
+    margin-right: 10px;
+}
+
+.checklistGroup{
+    list-style-type: none;
+}
+
+@media print { 
+    body{
+        margin:20px;
+    }
+
+    .noprint{
+        display:none;
+    }
+
+    h2, h3 {
+        break-after: avoid-page;
+    }
+
+    @page :left {
+        @bottom-left {
+          content: counter(page);
+        }
+      }
+ }
+
+.endOfLabels{
+    margin-bottom:1em;
+    display:block;
+}
+
+
+ .card-label{
+    font-size: 1rem;
+    background-color:#b3bac5;
+    border-radius:4px;
+    color:#fff;
+    display:inline-block;
+    margin-right:4px;
+    max-width:100%;
+    min-width:100px;
+    text-align:center;
+    overflow:hidden;
+    padding:4px 6px;
+    position:relative;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale
+}
+.card-label.mod-selectable.selected{
+    box-shadow:-8px 0 #97a0af
+}
+.card-label-green{
+    background-color:#61bd4f
+}
+.card-label-green.mod-selectable.selected{
+    box-shadow:-8px 0 #519839
+}
+.card-labels-hover .card-label-green.mod-card-front{
+    background-color:#519839
+}
+.card-label-yellow{
+    background-color:#f2d600
+}
+.card-label-yellow.mod-selectable.selected{
+    box-shadow:-8px 0 #d9b51c
+}
+.card-labels-hover .card-label-yellow.mod-card-front{
+    background-color:#d9b51c
+}
+.card-label-orange{
+    background-color:#ff9f1a
+}
+.card-label-orange.mod-selectable.selected{
+    box-shadow:-8px 0 #cd8313
+}
+.card-labels-hover .card-label-orange.mod-card-front{
+    background-color:#cd8313
+}
+.card-label-red{
+    background-color:#eb5a46
+}
+.card-label-red.mod-selectable.selected{
+    box-shadow:-8px 0 #b04632
+}
+.card-labels-hover .card-label-red.mod-card-front{
+    background-color:#b04632
+}
+.card-label-purple{
+    background-color:#c377e0
+}
+.card-label-purple.mod-selectable.selected{
+    box-shadow:-8px 0 #89609e
+}
+.card-labels-hover .card-label-purple.mod-card-front{
+    background-color:#89609e
+}
+.card-label-blue{
+    background-color:#0079bf
+}
+.card-label-blue.mod-selectable.selected{
+    box-shadow:-8px 0 #055a8c
+}
+.card-labels-hover .card-label-blue.mod-card-front{
+    background-color:#055a8c
+}
+.card-label-pink{
+    background-color:#ff78cb
+}
+.card-label-pink.mod-selectable.selected{
+    box-shadow:-8px 0 #c9558f
+}
+.card-labels-hover .card-label-pink.mod-card-front{
+    background-color:#c9558f
+}
+.card-label-sky{
+    background-color:#00c2e0
+}
+.card-label-sky.mod-selectable.selected{
+    box-shadow:-8px 0 #0098b7
+}
+.card-labels-hover .card-label-sky.mod-card-front{
+    background-color:#0098b7
+}
+.card-label-lime{
+    background-color:#51e898
+}
+.card-label-lime.mod-selectable.selected{
+    box-shadow:-8px 0 #4bbf6b
+}
+.card-labels-hover .card-label-lime.mod-card-front{
+    background-color:#4bbf6b
+}
+.card-label-black{
+    background-color:#344563
+}
