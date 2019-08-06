@@ -6,34 +6,49 @@ var storeName="TrelloPrinter";
 $(function() {
     
     $("#loadJsonBtn").click(function(){   
-        configObj.trelloBoardJson=JSON.parse($("#jsonTrelloBoard").val());
-        showData(configObj.trelloBoardJson);
-        persistConfigObj(configObj.trelloBoardJson);
+        try {
+            var textAreaVal = JSON.parse($("#jsonTrelloBoard").val());
+            configObj.trelloBoardJson= textAreaVal;
+            showData(configObj.trelloBoardJson);
+            persistConfigObj();
+        } catch (error) {
+            alert("Check your JSON!");
+        }
+        
+        
     }); 
     loadConfigObj();
     if(!configObj.trelloBoardJson){
-        jQuery.getJSON("assets/json/exported.json", function(data) {
-            configObj.trelloBoardJson=data;
-            var textAreaVal ;
-            
-            if(configObj.trelloBoardJson){
-                textAreaVal=JSON.stringify(configObj.trelloBoardJson);
-                showData(configObj.trelloBoardJson);
-            }else{
-                textAreaVal="";
-            }
-            $("#jsonTrelloBoard").val(textAreaVal);
-        }).fail(function() {
-                console.log( "error" );
-            });
+        try {
+            jQuery.getJSON("assets/json/exported.json", function(data) {
+                configObj.trelloBoardJson=data;
+                loadDocumentFromCache();
+            }).fail(function() {
+                    console.log( "error" );
+                });
+        } catch (error) {
+            console.log( error );
+        }
+        
     }else{
-        showData(configObj.trelloBoardJson);
+        loadDocumentFromCache();
     }
 
    
     
 });
 
+function loadDocumentFromCache(){
+    var textAreaVal ;
+                
+    if(configObj.trelloBoardJson){
+        textAreaVal=JSON.stringify(configObj.trelloBoardJson);
+        showData(configObj.trelloBoardJson);
+    }else{
+        textAreaVal="";
+    }
+    $("#jsonTrelloBoard").val(textAreaVal);
+}
 
 
 function showData(json) {
@@ -48,10 +63,15 @@ function loadConfigObj(){
     store = new Persist.Store(storeName);
     configObjStored = store.get('configObj');
     var objVersion = 2;
-    var restoreObj=configObjStored&&configObjStored.version===objVersion;
-    if(restoreObj){
+    var recreateObj=true;
+    if(configObjStored){
         configObj = JSON.parse(configObjStored);
-    }else{
+        if(configObj.version===objVersion){
+            recreateObj=false;
+        }
+    }
+    
+    if(recreateObj){
         configObj = {
             version: objVersion
         };

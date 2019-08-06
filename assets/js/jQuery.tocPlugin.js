@@ -12,8 +12,6 @@ function (tocList,selector) {
         var anchor = "<a name='" + index + "'></a>";                                   
         jQuery(this).before(anchor);                                                        
         
-         
-        
         if( jQuery(this).is("h1") ){  
             h1Counter++;  
             h2Counter=1;    
