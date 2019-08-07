@@ -90,26 +90,35 @@ li.checklistItem_incomplete:before {
 .checklistGroup{
     list-style-type: none;
 }
-
-@media print { 
-    body{
-        margin:20px;
-    }
-
-    .noprint{
-        display:none;
-    }
-
-    h2, h3 {
-        break-after: avoid-page;
-    }
-
-    @page :left {
-        @bottom-left {
-          content: counter(page);
-        }
+/*
+@page {
+    size: A4;
+    margin: 0;
+    margin: 70pt 60pt 70pt;
+    
+    @bottom-left {
+        margin: 10pt 0 30pt 0;
+        content: "Our Cats";
+        font-size: 9pt;
+        color: #333;
       }
- }
+    
+      @bottom-right { 
+        margin: 10pt 0 30pt 0;
+        content: counter(page);
+        font-size: 9pt;
+      }
+    
+      @top-right {
+        content:  string(doctitle);
+        margin: 30pt 0 10pt 0;
+        font-size: 9pt;
+      }
+}*/
+
+  
+
+
 
 .endOfLabels{
     margin-bottom:1em;
@@ -126,6 +135,7 @@ li.checklistItem_incomplete:before {
     margin-right:4px;
     max-width:100%;
     min-width:100px;
+    height: 32px;
     text-align:center;
     overflow:hidden;
     padding:4px 6px;
@@ -222,3 +232,148 @@ li.checklistItem_incomplete:before {
 .card-label-black{
     background-color:#344563
 }
+
+
+
+@media print { 
+    @page {
+        size: A4;
+        margin-top: 2cm;
+        margin-bottom: 2cm;
+        margin-right: 2cm;
+        margin-left: 2cm;
+    }
+
+    span[class^='card-label'], span[class*=' card-label']{
+        background:none;
+        color:#000;
+    }
+    
+    .card-label-sky:before {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        z-index: -1;
+        border-bottom: 32px solid #00c2e0; 
+      }
+
+    .card-label-green:before{
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        z-index: -1;
+        border-bottom: 32px solid #61bd4f;
+    }
+
+    .card-label-yellow:before{
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        z-index: -1;
+        border-bottom: 32px solid #f2d600;
+    }
+
+    .card-label-orange:before{
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        z-index: -1;
+        border-bottom: 32px solid #ff9f1a;
+    }
+    .card-label-red:before{
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        z-index: -1;
+        border-bottom: 32px solid #eb5a46;
+    }
+    .card-label-purple:before{
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        z-index: -1;
+        border-bottom: 32px solid #c377e0;
+    }
+    .card-label-blue:before{
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        z-index: -1;
+        border-bottom: 32px solid #0079bf;
+    }
+    .card-label-pink:before{
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        z-index: -1;
+        border-bottom: 32px solid #ff78cb;
+    }
+    .card-label-sky:before{
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        z-index: -1;
+        border-bottom: 32px solid #00c2e0;
+    }
+
+
+    .card-label-lime:before{
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        z-index: -1;
+        border-bottom: 32px solid #51e898;
+    }
+
+   
+    .card-label-black:before{
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        z-index: -1;
+        border-bottom: 32px solid #344563;
+    }
+
+    .noprint{
+        display:none;
+    }
+
+    h2, h3 {
+        break-after: avoid-page;
+    }
+
+    
+ }
