@@ -71,6 +71,13 @@
                     </ul>
                 </div>
                 {{/checklists}}
+                {{#images}}
+                <div class="panel-body imagesContainer" >
+                    <a href="{{{original}}}" target="_blank">
+                        <img class="imageAttachment" src="{{{scaled}}}">
+                    </a>
+                </div>
+                {{/images}}
             </div>
             {{/cards}}
             <hr>

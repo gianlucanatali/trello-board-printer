@@ -2,8 +2,21 @@
 var store;
 var configObj;
 var storeName="TrelloPrinter";
+var objVersion = "0.3";
+var loadFromJsonUrl=false;
+
+var markedOptions;
 
 $(function() {
+    const renderer = new marked.Renderer();
+    const linkRenderer = renderer.link;
+    renderer.link = (href, title, text) => {
+        const html = linkRenderer.call(renderer, href, title, text);
+        return html.replace(/^<a /, '<a target="_blank" rel="nofollow" ');
+    };
+    markedOptions = {
+        "renderer": renderer
+    }
     
     $("#loadJsonBtn").click(function(){   
         try {
@@ -18,7 +31,7 @@ $(function() {
         
     }); 
     loadConfigObj();
-    if(!configObj.trelloBoardJson){
+    if(loadFromJsonUrl&&!configObj.trelloBoardJson){
         try {
             jQuery.getJSON("assets/json/exported.json", function(data) {
                 configObj.trelloBoardJson=data;
@@ -50,11 +63,16 @@ function loadDocumentFromCache(){
     $("#jsonTrelloBoard").val(textAreaVal);
 }
 
+function urlIsImage(url){
+    return url.match(/.(jpg|jpeg|png|gif)$/i);
+   
+}
+
 
 function showData(json) {
     data=eatData(json);
     var template = $('#template-output').html()
-    console.log(JSON.stringify(data, null, 2))
+    //console.log(JSON.stringify(data, null, 2))
     $('#out').html(Mustache.render(template, data))
     jQuery.tableOfContents("#tocList","h1.tocHeader, h2.tocHeader"); 
 }
@@ -62,7 +80,6 @@ function showData(json) {
 function loadConfigObj(){
     store = new Persist.Store(storeName);
     configObjStored = store.get('configObj');
-    var objVersion = 2;
     var recreateObj=true;
     if(configObjStored){
         configObj = JSON.parse(configObjStored);
@@ -112,10 +129,11 @@ function eatData(trelloJson) {
         }
         data.ref[value.id] = {
             name: value.name,
-            desc: marked(value.desc),
+            desc: marked(value.desc, markedOptions),
             checklists: [],
             labels: [],
-            actions: []
+            actions: [],
+            images: []
         }
         value.labels.sort(function(a,b){
             if(a.name < b.name) { return -1; }
@@ -128,6 +146,19 @@ function eatData(trelloJson) {
             }
             //checkItem.name=marked(checkItem.name);
         });
+        $.each(value.attachments, function( index2, attachment ) {
+            
+           if(attachment.url&&urlIsImage(attachment.url)){
+             var imgIndex = Math.min(4,attachment.previews.length-1);
+             data.ref[value.id].images.push(
+                 {
+                    "scaled":attachment.previews[imgIndex].url,
+                    "original":attachment.url
+                }
+            );
+           }
+
+        });
         if(data.ref[value.idList]){
             data.ref[value.idList].cards.push(data.ref[value.id]);
         }
@@ -137,7 +168,7 @@ function eatData(trelloJson) {
             return;
         }
         data.ref[value.id] = {
-            text: marked(value.data.text),
+            text: marked(value.data.text, markedOptions),
             date: moment(value.date).format('YYYY-MM-DD')
         }
         try {
@@ -149,8 +180,7 @@ function eatData(trelloJson) {
             return;
         }
         $.each(value.checkItems, function( index2, checkItem ) {
-            checkItem.name=marked.inlineLexer(checkItem.name, [])
-            //checkItem.name=marked(checkItem.name);
+            checkItem.name=marked.inlineLexer(checkItem.name, [], markedOptions)
         });
         data.ref[value.id] = {
             name: value.name,
